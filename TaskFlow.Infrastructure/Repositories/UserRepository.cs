@@ -19,6 +19,11 @@ namespace TaskFlow.Infrastructure.Repositories
             return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
 
+        public async Task<User?> GetUserByIdAsync(Guid id)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
+        }
+
         public async Task AddAsync(User user)
         {
             await _context.Users.AddAsync(user);

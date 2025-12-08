@@ -50,7 +50,7 @@ namespace TaskFlow.Infrastructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Tasks");
+                    b.ToTable("TaskItems");
                 });
 
             modelBuilder.Entity("TaskFlow.Domain.Entities.User", b =>
