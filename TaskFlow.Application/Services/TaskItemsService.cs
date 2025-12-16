@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskFlow.Application.DTOs;
 using TaskFlow.Application.Interfaces;
 using TaskFlow.Domain.Entities;
 using TaskFlow.Infrastructure.Interfaces;
@@ -19,7 +20,7 @@ namespace TaskFlow.Application.Services
         public readonly ITaskItemsRepository _taskItemRepository = taskItemRepository;
         public readonly IUserRepository _userRepository = userRepository;
 
-        public async Task<List<TaskItem>> GetUserTasksAsync(Guid userId)
+        public async Task<List<TaskItemDTO>> GetUserTasksAsync(Guid userId)
         {
             var userExists = await _userRepository.GetUserByIdAsync(userId);
             if (userExists == null)
@@ -27,7 +28,17 @@ namespace TaskFlow.Application.Services
                 throw new Exception("User does not exist.");
             }
 
-            return await _taskItemRepository.GetUserTasksAsync(userId);
+            var tasks = await _taskItemRepository.GetUserTasksAsync(userId);
+
+            return tasks.Select(task => new TaskItemDTO
+            {
+                Id = task.Id,
+                Title = task.Title,
+                Description = task.Description,
+                CreatedAt = task.CreatedAt,
+                DueDate = task.DueDate,
+                Status = task.Status
+            }).ToList();
         }
 
         public async Task<TaskItem?> GetTaskByIdAsync(Guid userId, Guid id)
@@ -47,14 +58,24 @@ namespace TaskFlow.Application.Services
             return task;
         }
 
-        public async Task AddTaskAsync(TaskItem taskItem)
+        public async Task AddTaskAsync(Guid userId, CreateTaskItemDTO dto)
         {
-            var userExists = await _userRepository.GetUserByIdAsync(taskItem.UserId);
+            var task = new TaskItem
+            {
+                Id = Guid.NewGuid(),
+                UserId = userId,
+                Title = dto.Title,
+                Description = dto.Description ?? string.Empty,
+                CreatedAt = DateTime.UtcNow,
+                DueDate = dto.DueDate
+            };
+
+            var userExists = await _userRepository.GetUserByIdAsync(task.UserId);
             if (userExists == null)
             {
                 throw new Exception("User does not exist.");
             }
-            await _taskItemRepository.AddTaskAsync(taskItem);
+            await _taskItemRepository.AddTaskAsync(task);
         }
 
         public async Task UpdateTaskAsync(TaskItem taskItem)

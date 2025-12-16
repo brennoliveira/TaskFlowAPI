@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using TaskFlow.Application.Interfaces;
 using TaskFlow.Domain.Entities;
+using TaskFlow.Application.DTOs;
+using System.Security.Claims;
 
-namespace TaskFlow.Api.Cnotrollers
+namespace TaskFlow.Api.Cnotrollersa
 {
     [ApiController]
     [Route("/api/[controller]")]
@@ -12,12 +14,13 @@ namespace TaskFlow.Api.Cnotrollers
     {
         private readonly ITaskItemsService _taskItemsService = taskItemsService;
 
-        [HttpGet("user/{userId}")]
-        public async Task<IActionResult> GetUserTasksAsync(Guid userId)
+        [HttpGet]
+        public async Task<IActionResult> GetUserTasksAsync()
         {
             try
             {
-                var result = await _taskItemsService.GetUserTasksAsync(userId);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var result = await _taskItemsService.GetUserTasksAsync(Guid.Parse(userId));
                 return Ok(result);
             }
             catch (Exception ex)
@@ -26,7 +29,7 @@ namespace TaskFlow.Api.Cnotrollers
             }
         }
 
-        [HttpGet("{id}/user/{userId}")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskByIdAsync(Guid userId, Guid id)
         {
             try
@@ -41,11 +44,13 @@ namespace TaskFlow.Api.Cnotrollers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTaskAsync([FromBody] TaskItem taskItem)
+        public async Task<IActionResult> CreateTaskAsync([FromBody] CreateTaskItemDTO dto)
         {
             try
             {
-                await _taskItemsService.AddTaskAsync(taskItem);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                await _taskItemsService.AddTaskAsync(Guid.Parse(userId), dto);
                 return Ok(new { Message = "Task created successfully" });
             }
             catch (Exception ex)
