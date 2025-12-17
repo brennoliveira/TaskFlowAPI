@@ -96,9 +96,9 @@ namespace TaskFlow.Application.Services
             await _taskItemRepository.UpdateTaskAsync();
         }
 
-        public async Task DeleteTaskAsync(Guid id)
+        public async Task DeleteTaskAsync(Guid userId, Guid id)
         {
-            var existingTask = await _taskItemRepository.GetTaskByIdAsync(Guid.Empty, id);
+            var existingTask = await _taskItemRepository.GetTaskByIdAsync(userId, id);
             if (existingTask == null)
             {
                 throw new Exception("Task not found.");

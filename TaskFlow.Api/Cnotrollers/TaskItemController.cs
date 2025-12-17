@@ -80,7 +80,8 @@ namespace TaskFlow.Api.Cnotrollersa
         {
             try
             {
-                await _taskItemsService.DeleteTaskAsync(id);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await _taskItemsService.DeleteTaskAsync(Guid.Parse(userId), id);
                 return Ok(new { Message = "Task deleted successfully" });
             }
             catch (Exception ex)
