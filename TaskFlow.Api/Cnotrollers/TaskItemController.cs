@@ -30,11 +30,12 @@ namespace TaskFlow.Api.Cnotrollersa
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetTaskByIdAsync(Guid userId, Guid id)
+        public async Task<IActionResult> GetTaskByIdAsync(Guid id)
         {
             try
             {
-                var result = await _taskItemsService.GetTaskByIdAsync(userId, id);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var result = await _taskItemsService.GetTaskByIdAsync(Guid.Parse(userId), id);
                 return Ok(result);
             }
             catch (Exception ex)
@@ -59,12 +60,13 @@ namespace TaskFlow.Api.Cnotrollersa
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateTaskAsync([FromBody] TaskItem taskItem)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateTaskAsync(Guid id, [FromBody] UpdateTaskItemDTO dto)
         {
             try
             {
-                await _taskItemsService.UpdateTaskAsync(taskItem);
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                await _taskItemsService.UpdateTaskAsync(Guid.Parse(userId), id, dto);
                 return Ok(new { Message = "Task updated successfully" });
             }
             catch (Exception ex)

@@ -28,9 +28,8 @@ namespace TaskFlow.Infrastructure.Repositories
             await _context.TaskItems.AddAsync(taskItem);
             await _context.SaveChangesAsync();
         }
-        public async Task UpdateTaskAsync(TaskItem taskItem)
+        public async Task UpdateTaskAsync()
         {
-            _context.TaskItems.Update(taskItem);
             await _context.SaveChangesAsync();
         }
         public async Task DeleteTaskAsync(Guid id)

@@ -12,7 +12,7 @@ namespace TaskFlow.Infrastructure.Interfaces
         Task<List<TaskItem>> GetUserTasksAsync(Guid userId);
         Task<TaskItem?> GetTaskByIdAsync(Guid userId, Guid id);
         Task AddTaskAsync(TaskItem task);
-        Task UpdateTaskAsync(TaskItem task);
+        Task UpdateTaskAsync();
         Task DeleteTaskAsync(Guid id);
     }
 }

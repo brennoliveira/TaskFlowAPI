@@ -78,14 +78,22 @@ namespace TaskFlow.Application.Services
             await _taskItemRepository.AddTaskAsync(task);
         }
 
-        public async Task UpdateTaskAsync(TaskItem taskItem)
+        public async Task UpdateTaskAsync(Guid userId, Guid taskId, UpdateTaskItemDTO dto)
         {
-            var existingTask = await _taskItemRepository.GetTaskByIdAsync(taskItem.UserId, taskItem.Id);
+            var existingTask = await _taskItemRepository.GetTaskByIdAsync(userId, taskId);
             if (existingTask == null)
             {
                 throw new Exception("Task not found.");
             }
-            await _taskItemRepository.UpdateTaskAsync(taskItem);
+
+            existingTask.Update(
+                dto.Title ?? existingTask.Title,
+                dto.Description ?? existingTask.Description,
+                dto.DueDate ?? existingTask.DueDate,
+                dto.Status ?? existingTask.Status
+            );
+
+            await _taskItemRepository.UpdateTaskAsync();
         }
 
         public async Task DeleteTaskAsync(Guid id)

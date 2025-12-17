@@ -18,5 +18,17 @@ namespace TaskFlow.Domain.Entities
         // Foreign key to User
         public Guid UserId { get; set; }
         public User? User { get; set; }
+
+        public void Update(
+            string title,
+            string description,
+            DateTime dueDate,
+            TaskStats status)
+        {
+            Title = title;
+            Description = description;
+            DueDate = dueDate;
+            Status = status;
+        }
     }
 }
