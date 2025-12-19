@@ -42,7 +42,7 @@ namespace TaskFlow.Application.Services
             }).ToList();
         }
 
-        public async Task<TaskItem?> GetTaskByIdAsync(Guid userId, Guid id)
+        public async Task<TaskItemDTO?> GetTaskByIdAsync(Guid userId, Guid id)
         {
             var userExists = await _userRepository.GetUserByIdAsync(userId);
             if (userExists == null)
@@ -56,7 +56,15 @@ namespace TaskFlow.Application.Services
                 throw new NotFoundException("Task not found.");
             }
 
-            return task;
+            return new TaskItemDTO
+            {
+                Id = task.Id,
+                Title = task.Title,
+                Description = task.Description,
+                CreatedAt = task.CreatedAt,
+                DueDate = task.DueDate,
+                Status = task.Status
+            };
         }
 
         public async Task AddTaskAsync(Guid userId, CreateTaskItemDTO dto)

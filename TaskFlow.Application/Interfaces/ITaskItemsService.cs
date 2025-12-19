@@ -11,7 +11,7 @@ namespace TaskFlow.Application.Interfaces
     public interface ITaskItemsService
     {
         Task<List<TaskItemDTO>> GetUserTasksAsync(Guid userId);
-        Task<TaskItem?> GetTaskByIdAsync(Guid userId, Guid id);
+        Task<TaskItemDTO?> GetTaskByIdAsync(Guid userId, Guid id);
         Task AddTaskAsync(Guid userId, CreateTaskItemDTO taskItem);
         Task UpdateTaskAsync(Guid userId, Guid taskId, UpdateTaskItemDTO dto);
         Task DeleteTaskAsync(Guid userId, Guid id);

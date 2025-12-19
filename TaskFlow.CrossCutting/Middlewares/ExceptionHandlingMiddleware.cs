@@ -28,7 +28,6 @@ namespace TaskFlow.CrossCutting.Middlewares
             catch (AppException ex)
             {
                 context.Response.StatusCode = ex.StatusCode;
-                Console.WriteLine($"status code: {ex.StatusCode}");
                 context.Response.ContentType = "application/json";
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(new

@@ -14,29 +14,15 @@ namespace TaskFlow.Api.Cnotrollers
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterUserDTO dto)
         {
-            try
-            {
-                await _userService.RegisterAsync(dto);
-                return Ok(new { Message = "User registered successfully." });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
+            await _userService.RegisterAsync(dto);
+            return Ok(new { Message = "User registered successfully." });
         }
 
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginUserDTO dto)
         {
-            try
-            {
-                var token = await _userService.LoginAsync(dto);
-                return Ok(new { Token = token });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
+            var token = await _userService.LoginAsync(dto);
+            return Ok(new { Token = token });
         }
     }
 }

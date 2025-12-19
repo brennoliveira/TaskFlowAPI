@@ -9,6 +9,7 @@ using TaskFlow.Application.Services.Auth;
 using TaskFlow.Application.DTOs;
 using TaskFlow.Infrastructure.Interfaces;
 using TaskFlow.Application.Interfaces;
+using TaskFlow.CrossCutting.Exceptions;
 
 namespace TaskFlow.Application.Services
 {
@@ -22,7 +23,7 @@ namespace TaskFlow.Application.Services
             var existingUser = await _userRepository.GetUserByEmailAsync(dto.Email);
             if (existingUser != null)
             {
-                throw new Exception("Email already registered.");
+                throw new ConflictException("Email already registered.");
             }
 
             var user = new User
@@ -40,7 +41,7 @@ namespace TaskFlow.Application.Services
             var user = await _userRepository.GetUserByEmailAsync(dto.Email);
             if (user == null || !BCrypt.Net.BCrypt.Verify(dto.Password, user.PasswordHash))
             {
-                throw new Exception("Invalid email or password.");
+                throw new UnauthorizedException("Invalid email or password.");
             }
 
             return _jwtService.GenerateToken(user.Id, user.Email);
