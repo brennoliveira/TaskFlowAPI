@@ -6,6 +6,7 @@ using System.Text;
 using TaskFlow.Application.Interfaces;
 using TaskFlow.Application.Services;
 using TaskFlow.Application.Services.Auth;
+using TaskFlow.CrossCutting.Middlewares;
 using TaskFlow.Infrastructure.Data;
 using TaskFlow.Infrastructure.Interfaces;
 using TaskFlow.Infrastructure.Repositories;
@@ -104,6 +105,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseAuthentication();
 app.UseAuthorization();

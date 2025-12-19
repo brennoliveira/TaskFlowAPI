@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TaskFlow.Domain\TaskFlow.Domain.csproj" />
+    <ProjectReference Include="..\TaskFlow.CrossCutting\TaskFlow.CrossCutting.csproj" />
   </ItemGroup>
 
   <ItemGroup>

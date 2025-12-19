@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskFlow.Application.DTOs;
 using TaskFlow.Application.Interfaces;
+using TaskFlow.CrossCutting.Exceptions;
 using TaskFlow.Domain.Entities;
 using TaskFlow.Infrastructure.Interfaces;
 
@@ -25,7 +26,7 @@ namespace TaskFlow.Application.Services
             var userExists = await _userRepository.GetUserByIdAsync(userId);
             if (userExists == null)
             {
-                throw new Exception("User does not exist.");
+                throw new NotFoundException("User does not exist.");
             }
 
             var tasks = await _taskItemRepository.GetUserTasksAsync(userId);
@@ -46,13 +47,13 @@ namespace TaskFlow.Application.Services
             var userExists = await _userRepository.GetUserByIdAsync(userId);
             if (userExists == null)
             {
-                throw new Exception("User does not exist.");
+                throw new NotFoundException("User does not exist.");
             }
 
             var task = await _taskItemRepository.GetTaskByIdAsync(userId, id);
             if (task == null)
             {
-                throw new Exception("Task not found.");
+                throw new NotFoundException("Task not found.");
             }
 
             return task;
@@ -73,7 +74,7 @@ namespace TaskFlow.Application.Services
             var userExists = await _userRepository.GetUserByIdAsync(task.UserId);
             if (userExists == null)
             {
-                throw new Exception("User does not exist.");
+                throw new NotFoundException("User does not exist.");
             }
             await _taskItemRepository.AddTaskAsync(task);
         }
@@ -83,7 +84,7 @@ namespace TaskFlow.Application.Services
             var existingTask = await _taskItemRepository.GetTaskByIdAsync(userId, taskId);
             if (existingTask == null)
             {
-                throw new Exception("Task not found.");
+                throw new NotFoundException("Task not found.");
             }
 
             existingTask.Update(
@@ -101,7 +102,7 @@ namespace TaskFlow.Application.Services
             var existingTask = await _taskItemRepository.GetTaskByIdAsync(userId, id);
             if (existingTask == null)
             {
-                throw new Exception("Task not found.");
+                throw new NotFoundException("Task not found.");
             }
             await _taskItemRepository.DeleteTaskAsync(id);
         }

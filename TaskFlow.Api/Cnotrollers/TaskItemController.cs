@@ -17,77 +17,44 @@ namespace TaskFlow.Api.Cnotrollersa
         [HttpGet]
         public async Task<IActionResult> GetUserTasksAsync()
         {
-            try
-            {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var result = await _taskItemsService.GetUserTasksAsync(Guid.Parse(userId));
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _taskItemsService.GetUserTasksAsync(Guid.Parse(userId));
+            return Ok(result);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTaskByIdAsync(Guid id)
         {
-            try
-            {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                var result = await _taskItemsService.GetTaskByIdAsync(Guid.Parse(userId), id);
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var result = await _taskItemsService.GetTaskByIdAsync(Guid.Parse(userId), id);
+            return Ok(result);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateTaskAsync([FromBody] CreateTaskItemDTO dto)
         {
-            try
-            {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                await _taskItemsService.AddTaskAsync(Guid.Parse(userId), dto);
-                return Ok(new { Message = "Task created successfully" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            await _taskItemsService.AddTaskAsync(Guid.Parse(userId), dto);
+            return Ok(new { Message = "Task created successfully" });
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateTaskAsync(Guid id, [FromBody] UpdateTaskItemDTO dto)
         {
-            try
-            {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 await _taskItemsService.UpdateTaskAsync(Guid.Parse(userId), id, dto);
                 return Ok(new { Message = "Task updated successfully" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
         }
         
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTaskAsync(Guid id)
         {
-            try
-            {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 await _taskItemsService.DeleteTaskAsync(Guid.Parse(userId), id);
                 return Ok(new { Message = "Task deleted successfully" });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Error = ex.Message });
-            }
         }
     }
 }
