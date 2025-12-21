@@ -18,4 +18,14 @@ namespace TaskFlow.CrossCutting.Responses
             Message = message;
         }
     }
+
+    public class ApiSuccessResponse : ApiResponse
+    {
+        public string? Message { get; }
+        public ApiSuccessResponse(string? message = null)
+        {
+            Success = true;
+            Message = message;
+        }
+    }
 }
