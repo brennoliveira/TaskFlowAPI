@@ -7,6 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using TaskFlow.CrossCutting.Exceptions;
+using TaskFlow.CrossCutting.Responses;
 
 namespace TaskFlow.CrossCutting.Middlewares
 {
@@ -31,9 +32,8 @@ namespace TaskFlow.CrossCutting.Middlewares
                 context.Response.ContentType = "application/json";
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(new
-                {
-                    error = ex.Message
-                }));
+                    ApiErrorResponse(ex.Message)
+                ));
             }
             catch (Exception)
             {
@@ -41,9 +41,8 @@ namespace TaskFlow.CrossCutting.Middlewares
                 context.Response.ContentType = "application/json";
 
                 await context.Response.WriteAsync(JsonSerializer.Serialize(new
-                {
-                    error = "Internal server error"
-                }));
+                    ApiErrorResponse("Internal server error")
+                ));
             }
         }
     }
