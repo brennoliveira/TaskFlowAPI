@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using TaskFlow.Api.Messaging;
 using TaskFlow.Application.Interfaces;
 using TaskFlow.Application.Services;
 using TaskFlow.Application.Services.Auth;
+using TaskFlow.CrossCutting.Messaging.Extensions;
 using TaskFlow.CrossCutting.Middlewares;
 using TaskFlow.Infrastructure.Data;
 using TaskFlow.Infrastructure.Interfaces;
@@ -94,7 +94,7 @@ builder.Services.AddCors(options =>
 });
 
 // RabbitMQ Service
-builder.Services.AddRabbitMQService(builder.Configuration);
+builder.Services.AddMessaging(builder.Configuration);
 
 var app = builder.Build();
 

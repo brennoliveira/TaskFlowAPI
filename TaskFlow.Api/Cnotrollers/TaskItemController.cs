@@ -6,6 +6,7 @@ using TaskFlow.Application.DTOs;
 using System.Security.Claims;
 using TaskFlow.CrossCutting.Responses;
 using Microsoft.AspNetCore.Http;
+using MassTransit;
 
 namespace TaskFlow.Api.Cnotrollers
 {
@@ -43,7 +44,7 @@ namespace TaskFlow.Api.Cnotrollers
         [ProducesResponseType(typeof(ApiSuccessResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(typeof(ApiErrorResponse), StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> CreateTaskAsync([FromBody] CreateTaskItemDTO dto)
+        public async Task<IActionResult> CreateTaskAsync([FromBody] CreateTaskItemDTO dto, IBus bus)
         {
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);

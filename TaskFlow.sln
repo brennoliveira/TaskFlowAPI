@@ -4,6 +4,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.14.36203.30
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Api", "TaskFlow.Api\TaskFlow.Api.csproj", "{4447C516-30DF-4630-A505-0B5984BE5D5A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6B10A9B9-71D5-41A6-B7D6-6D061CF282B4} = {6B10A9B9-71D5-41A6-B7D6-6D061CF282B4}
+		{8CA35E69-EA60-4A3A-8DC0-DBB3AB7E9961} = {8CA35E69-EA60-4A3A-8DC0-DBB3AB7E9961}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskFlow.Domain", "TaskFlow.Domain\TaskFlow.Domain.csproj", "{6B10A9B9-71D5-41A6-B7D6-6D061CF282B4}"
 EndProject
