@@ -1,25 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MassTransit;
 using TaskFlow.Application.DTOs;
 using TaskFlow.Application.Interfaces;
+using TaskFlow.Application.Interfaces.Repositories;
+using TaskFlow.Application.Interfaces.Services;
 using TaskFlow.CrossCutting.Exceptions;
+using TaskFlow.CrossCutting.Messaging.Events;
 using TaskFlow.Domain.Entities;
-using TaskFlow.Infrastructure.Interfaces;
 
 namespace TaskFlow.Application.Services
 {
     public class TaskItemsService
             (
             ITaskItemsRepository taskItemRepository,
-            IUserRepository userRepository
+            IUserRepository userRepository,
+            IPublishEndpoint publishEndpoint
             )
             : ITaskItemsService
     {
         public readonly ITaskItemsRepository _taskItemRepository = taskItemRepository;
         public readonly IUserRepository _userRepository = userRepository;
+        public readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
 
         public async Task<List<TaskItemDTO>> GetUserTasksAsync(Guid userId)
         {
@@ -85,6 +85,12 @@ namespace TaskFlow.Application.Services
                 throw new NotFoundException("User does not exist.");
             }
             await _taskItemRepository.AddTaskAsync(task);
+
+            // Messaging
+            await _publishEndpoint.Publish(new TaskCreatedEvent(
+                task.Id,
+                task.Title
+            ));
         }
 
         public async Task UpdateTaskAsync(Guid userId, Guid taskId, UpdateTaskItemDTO dto)

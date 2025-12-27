@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using TaskFlow.Infrastructure.Data;
-using TaskFlow.Domain.Entities;
+﻿using TaskFlow.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
-using TaskFlow.Infrastructure.Interfaces;
+using TaskFlow.Application.Interfaces;
+using TaskFlow.Infrastructure.Data;
 
 namespace TaskFlow.Infrastructure.Repositories
 {

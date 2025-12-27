@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using TaskFlow.Application.Interfaces;
 using TaskFlow.Domain.Entities;
 using TaskFlow.Application.DTOs;
 using System.Security.Claims;
 using TaskFlow.CrossCutting.Responses;
 using Microsoft.AspNetCore.Http;
 using MassTransit;
+using TaskFlow.Application.Interfaces.Services;
 
 namespace TaskFlow.Api.Cnotrollers
 {

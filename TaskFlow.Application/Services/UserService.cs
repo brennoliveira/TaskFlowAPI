@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using TaskFlow.Domain.Entities;
 using TaskFlow.Application.Services.Auth;
 using TaskFlow.Application.DTOs;
-using TaskFlow.Infrastructure.Interfaces;
 using TaskFlow.Application.Interfaces;
 using TaskFlow.CrossCutting.Exceptions;
+using TaskFlow.Application.Interfaces.Services;
 
 namespace TaskFlow.Application.Services
 {

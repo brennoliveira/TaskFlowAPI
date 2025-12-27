@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TaskFlow.Application.Services;
 using TaskFlow.Application.DTOs;
-using TaskFlow.Application.Interfaces;
 using TaskFlow.CrossCutting.Responses;
 using Microsoft.OpenApi.Any;
+using TaskFlow.Application.Interfaces.Services;
 
 namespace TaskFlow.Api.Cnotrollers
 {

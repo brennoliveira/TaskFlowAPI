@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskFlow.Application.DTOs;
 
-namespace TaskFlow.Application.Interfaces
+namespace TaskFlow.Application.Interfaces.Services
 {
     public interface IUserService
     {

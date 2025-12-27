@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using TaskFlow.Application.DTOs;
 using TaskFlow.Domain.Entities;
 
-namespace TaskFlow.Application.Interfaces
+namespace TaskFlow.Application.Interfaces.Services
 {
     public interface ITaskItemsService
     {

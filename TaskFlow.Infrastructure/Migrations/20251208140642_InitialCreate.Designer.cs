@@ -8,7 +8,7 @@ using TaskFlow.Infrastructure.Data;
 
 #nullable disable
 
-namespace TaskFlow.Infrastructure.Migrations
+namespace TaskFlow.Application.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     [Migration("20251208140642_InitialCreate")]

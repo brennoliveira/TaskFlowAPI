@@ -1,16 +1,16 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using TaskFlow.Application.Interfaces;
+using TaskFlow.Application.Interfaces.Services;
 using TaskFlow.Application.Services;
 using TaskFlow.Application.Services.Auth;
 using TaskFlow.CrossCutting.Messaging.Extensions;
 using TaskFlow.CrossCutting.Middlewares;
-using TaskFlow.Infrastructure.Data;
-using TaskFlow.Infrastructure.Interfaces;
+using TaskFlow.Application.Interfaces;
 using TaskFlow.Infrastructure.Repositories;
+using TaskFlow.Application.Interfaces.Repositories;
+using TaskFlow.Infrastructure.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 

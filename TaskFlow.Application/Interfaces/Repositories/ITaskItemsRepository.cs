@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskFlow.Domain.Entities;
 
-namespace TaskFlow.Infrastructure.Interfaces
+namespace TaskFlow.Application.Interfaces.Repositories
 {
     public interface ITaskItemsRepository
     {
