@@ -1,16 +1,19 @@
+using MassTransit.Transports;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using TaskFlow.Application.Interfaces;
+using TaskFlow.Application.Interfaces.Messaging;
+using TaskFlow.Application.Interfaces.Repositories;
 using TaskFlow.Application.Interfaces.Services;
 using TaskFlow.Application.Services;
 using TaskFlow.Application.Services.Auth;
-using TaskFlow.CrossCutting.Messaging.Extensions;
 using TaskFlow.CrossCutting.Middlewares;
-using TaskFlow.Application.Interfaces;
-using TaskFlow.Infrastructure.Repositories;
-using TaskFlow.Application.Interfaces.Repositories;
 using TaskFlow.Infrastructure.Data;
+using TaskFlow.Infrastructure.Messaging;
+using TaskFlow.Infrastructure.Messaging.Config;
+using TaskFlow.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -49,6 +52,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>(); 
 builder.Services.AddScoped<ITaskItemsRepository, TaskItemsRepository>();
 builder.Services.AddScoped<ITaskItemsService, TaskItemsService>();
+builder.Services.AddScoped<IMessageBus, MassTransitEventPublisher>();
 
 builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();

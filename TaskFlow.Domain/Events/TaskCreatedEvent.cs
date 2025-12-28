@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskFlow.CrossCutting.Messaging.Events
+namespace TaskFlow.Domain.Events
 {
     public record TaskCreatedEvent(Guid TaskId, string Title);
 }

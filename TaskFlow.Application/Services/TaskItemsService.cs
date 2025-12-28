@@ -1,11 +1,12 @@
 ﻿using MassTransit;
 using TaskFlow.Application.DTOs;
 using TaskFlow.Application.Interfaces;
+using TaskFlow.Application.Interfaces.Messaging;
 using TaskFlow.Application.Interfaces.Repositories;
 using TaskFlow.Application.Interfaces.Services;
 using TaskFlow.CrossCutting.Exceptions;
-using TaskFlow.CrossCutting.Messaging.Events;
 using TaskFlow.Domain.Entities;
+using TaskFlow.Domain.Events;
 
 namespace TaskFlow.Application.Services
 {
@@ -13,13 +14,13 @@ namespace TaskFlow.Application.Services
             (
             ITaskItemsRepository taskItemRepository,
             IUserRepository userRepository,
-            IPublishEndpoint publishEndpoint
+            IMessageBus publishEndpoint
             )
             : ITaskItemsService
     {
         public readonly ITaskItemsRepository _taskItemRepository = taskItemRepository;
         public readonly IUserRepository _userRepository = userRepository;
-        public readonly IPublishEndpoint _publishEndpoint = publishEndpoint;
+        public readonly IMessageBus _publishEndpoint = publishEndpoint;
 
         public async Task<List<TaskItemDTO>> GetUserTasksAsync(Guid userId)
         {
@@ -87,7 +88,7 @@ namespace TaskFlow.Application.Services
             await _taskItemRepository.AddTaskAsync(task);
 
             // Messaging
-            await _publishEndpoint.Publish(new TaskCreatedEvent(
+            await _publishEndpoint.PublishAsync(new TaskCreatedEvent(
                 task.Id,
                 task.Title
             ));

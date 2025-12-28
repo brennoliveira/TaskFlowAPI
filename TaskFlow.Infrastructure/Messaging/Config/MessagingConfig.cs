@@ -1,10 +1,15 @@
 ﻿using MassTransit;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace TaskFlow.CrossCutting.Messaging.Extensions
+namespace TaskFlow.Infrastructure.Messaging.Config
 {
-    public static class MessagingExtensions
+    public static class MessagingConfig
     {
         public static IServiceCollection AddMessaging(
             this IServiceCollection services,
@@ -14,7 +19,7 @@ namespace TaskFlow.CrossCutting.Messaging.Extensions
             {
                 busConfigurator.SetKebabCaseEndpointNameFormatter();
 
-                busConfigurator.AddConsumers(typeof(MessagingExtensions).Assembly);
+                busConfigurator.AddConsumers(typeof(MessagingConfig).Assembly);
 
                 busConfigurator.UsingRabbitMq((context, cfg) =>
                 {
