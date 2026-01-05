@@ -1,7 +1,11 @@
+version: "3.9"
+
 services:
-  rabbitmq:
-    image: rabbitmq:3-management
-    container_name: rabbit-taskflow
+  taskflow_api:
+    build: .
+    container_name: taskflow_api
     ports:
-      - "5672:5672"
-      - "15672:15672"
+      - "8080:8080"
+    env_file:
+      - .env
+    restart: unless-stopped
