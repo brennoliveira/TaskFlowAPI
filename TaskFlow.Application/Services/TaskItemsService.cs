@@ -57,6 +57,17 @@ namespace TaskFlow.Application.Services
                 throw new NotFoundException("Task not found.");
             }
 
+            //Messaging
+            await _publishEndpoint.PublishAsync(
+                new TaskOpenedEvent(
+                    task.Id,
+                    userId,
+                    DateTime.Now
+                )    
+            );
+
+            await _taskItemRepository.UpdateTaskAsync();
+
             return new TaskItemDTO
             {
                 Id = task.Id,
@@ -106,7 +117,8 @@ namespace TaskFlow.Application.Services
                 dto.Title ?? existingTask.Title,
                 dto.Description ?? existingTask.Description,
                 dto.DueDate ?? existingTask.DueDate,
-                dto.Status ?? existingTask.Status
+                dto.Status ?? existingTask.Status,
+                false
             );
 
             await _taskItemRepository.UpdateTaskAsync();

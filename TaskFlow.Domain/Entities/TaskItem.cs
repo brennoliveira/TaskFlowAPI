@@ -14,6 +14,7 @@ namespace TaskFlow.Domain.Entities
         public string Description { get; set; } = string.Empty;
         public DateTime DueDate { get; set; }
         public TaskStats Status { get; set; } = TaskStats.Pending;
+        public bool Opened { get; set; } = false;
 
         // Foreign key to User
         public Guid UserId { get; set; }
@@ -23,12 +24,15 @@ namespace TaskFlow.Domain.Entities
             string title,
             string description,
             DateTime dueDate,
-            TaskStats status)
+            TaskStats status,
+            bool opened)
         {
             Title = title;
             Description = description;
             DueDate = dueDate;
             Status = status;
+            UpdatedAt = DateTime.UtcNow;
+            Opened = opened;
         }
     }
 }
