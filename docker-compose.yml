@@ -1,11 +1,21 @@
+# version: "3.9"
+
+# services:
+#   taskflow_api:
+#     build: .
+#     container_name: taskflow_api
+#     ports:
+#       - "8080:8080"
+#     env_file:
+#       - .env
+#     restart: unless-stopped
+
 version: "3.9"
 
 services:
   taskflow_api:
-    build: .
+    image: taskflow-api:latest
     container_name: taskflow_api
     ports:
       - "8080:8080"
-    env_file:
-      - .env
     restart: unless-stopped
